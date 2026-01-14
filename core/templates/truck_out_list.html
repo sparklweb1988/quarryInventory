@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h2>Trucks Out</h2>
+    <a href="{% url 'truck_out'%}">Exit Truck</a>
+    <br><br>
+
+    <!-- Desktop Table View -->
+    <div class="desktop-view">
+        <table>
+            <thead>
+                <tr>
+                    <th>Truck Number</th>
+                    <th>Material</th>
+                    <th>Tare Weight</th>
+                    <th>Gross Weight</th>
+                    <th>Net Weight</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for truck in trucks %}
+                <tr>
+                    <td>{{ truck.truck_number }}</td>
+                    <td>{{ truck.material.name }}</td>
+                    <td>{{ truck.tare_weight }} (Tons)</td>
+                    <td>{{ truck.gross_weight }} (Tons)</td>
+                    <td>{{ truck.net_weight }} (Tons)</td>
+                    <td>{{ truck.date }}</td>
+                    <td>{{ truck.time }}</td>
+                    <td>
+                        <a href="{% url 'truck_out_edit' truck.id %}">Edit</a> |
+                        <a href="{% url 'truck_out_delete' truck.id %}" 
+                           onclick="return confirm('Are you sure you want to delete this truck entry?')">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">No trucks found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="mobile-view">
+        {% for truck in trucks %}
+        <div class="mobile-card">
+            <h3>Truck: {{ truck.truck_number }}</h3>
+            <p><strong>Material:</strong> {{ truck.material.name }}</p>
+            <p><strong>Tare Weight:</strong> {{ truck.tare_weight }} Tons</p>
+            <p><strong>Gross Weight:</strong> {{ truck.gross_weight }} Tons</p>
+            <p><strong>Net Weight:</strong> {{ truck.net_weight }} Tons</p>
+            <p><strong>Date:</strong> {{ truck.date }}</p>
+            <p><strong>Time:</strong> {{ truck.time }}</p>
+            <div class="mobile-actions">
+                <a href="{% url 'truck_out_edit' truck.id %}" class="action-btn edit">Edit</a>
+                <a href="{% url 'truck_out_delete' truck.id %}" class="action-btn delete">Delete</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No trucks found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

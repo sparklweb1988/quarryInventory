@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <br>
+    <h2>Edit Stock</h2>
+    <br><br>
+
+    <form method="POST" action="{% url 'edit_stock' stock.id %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Material</label>
+            <select name="material" id="material">
+                {% for m in materials %}
+                <option value="{{ m.id }}"
+                    {% if m.id == stock.material.id %}selected{% endif %}>
+                    {{ m.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="qnty">Quantity</label>
+            <input type="number" name="qnty" id="qnty"
+                   value="{{ stock.quantity }}" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Update</button>
+            <br><br>
+            <a href="{% url 'stock_list' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

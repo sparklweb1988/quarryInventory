@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <br />
+  <h2>Exit Truck</h2>
+  <br><br>
+
+
+  <form method="POST" action="{% url 'truck_out'%}">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <select name="truck" required>
+        <option value="">Select Truck Number</option>
+        {% for t in truck_numbers %}
+        <option value="{{ t }}">{{ t }}</option>
+        {% endfor %}
+      </select><br>
+    </div>
+
+    <div class="form-group">
+      <select name="material" required>
+        {% for m in materials %}
+        <option value="{{ m.id }}">{{ m.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+
+
+    <div class="form-group">
+      <input name="tare" placeholder="Tare Weight" required>
+      <input name="gross" placeholder="Gross Weight" required>
+    </div>
+
+
+    <!-- 
+    <div class="form-group">
+      
+    </div> -->
+
+
+
+
+    <div class="form-group">
+      <select name="destination" required>
+        <option value="">Select Quarry</option>
+        {% for q in quarries %}
+        <option value="{{ q.name }}">{{ q.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <br />
+    <div class="form-group">
+      <button type="submit">Save</button>
+      <br /> <br />
+      <a href="{% url 'truck_out_list'%}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+    <br />
+    <h2>New Stock</h2>
+    <br><br>
+
+
+    <form method="POST" action="{% url 'stock_add'%}">
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <select name="material" id="material">
+                <option value="">Select Material</option>
+                {% for m in materails %}
+                <option value="{{m.id }}">{{m.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="qnty">Quantity</label>
+            <input type="number" name="qnty" id="qnty">
+        </div>
+
+
+        <div class="form-group">
+            <button type="submit">Save</button>
+            <br /> <br />
+            <a href="{% url 'stock_list'%}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

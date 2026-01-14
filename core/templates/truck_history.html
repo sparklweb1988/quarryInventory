@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Total Movement Report</h2>
+
+    <!-- Filter Form -->
+    <form method="get" style="margin-bottom:20px;">
+        <label>From:</label>
+        <input type="date" name="from_date" value="{{ from_date }}">
+
+        <label>To:</label>
+        <input type="date" name="to_date" value="{{ to_date }}">
+        <br> <br>
+        <button type="submit">Filter</button>
+        <br><br>
+        <h2><a href="{% url 'truck_history'%}">Reset</a></h2>
+    </form>
+
+    <!-- Desktop Table View -->
+    <div class="desktop-view">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Truck Number</th>
+                    <th>Material</th>
+                    <th>Movement Type</th>
+                    <th>Net Weight</th>
+                    <th>Destination</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in all_trucks %}
+                <tr>
+                    <td>{{ t.date }}</td>
+                    <td>{{ t.truck_number }}</td>
+                    <td>{{ t.material.name }}</td>
+                    <td>{{ t.type }}</td>
+                    <td>{{ t.net_weight }} (Tons)</td>
+                    <td>{{ t.destination }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="mobile-view">
+        {% for t in all_trucks %}
+        <div class="mobile-card">
+            <p><strong>Date:</strong> {{ t.date }}</p>
+            <p><strong>Truck Number:</strong> {{ t.truck_number }}</p>
+            <p><strong>Material:</strong> {{ t.material.name }}</p>
+            <p><strong>Movement Type:</strong> {{ t.type }}</p>
+            <p><strong>Net Weight:</strong> {{ t.net_weight }} Tons</p>
+            {% if t.destination %}
+            <p><strong>Destination:</strong> {{ t.destination }}</p>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>No records found</p>
+        {% endfor %}
+    </div>
+
+    <br>
+    <a href="{% url 'truck_history' %}?from_date={{ from_date }}&to_date={{ to_date }}&export=excel">
+        Generate Report
+    </a>
+
+</div>
+{% endblock %}

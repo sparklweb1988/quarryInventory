@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <br />
+  <h2>Add Truck</h2>
+  <br /><br />
+
+
+  <form method="POST" action="{% url 'truck_in'%}">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <input name="truck" placeholder="Truck Number" required><br>
+      <select name="material">
+        {% for m in materials %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
+      </select><br>
+    </div>
+
+    <div class="form-group">
+      <input name="tare" placeholder="Tare Weight" required><br>
+      <input name="gross" placeholder="Gross Weight" required><br>
+     
+    </div>
+
+    <br />
+    <div class="form-group">
+      <button type="submit">Save</button>
+      <br />
+      <a href="{% url 'truck_list'%}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

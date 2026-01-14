@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+    <br />
+    <h2>Edit Quarry</h2>
+    <br><br>
+
+
+    <form method="POST" action="{% url 'edit_quarry' quarry.id %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="quarry">Quarry Name</label>
+            <input type="text" name="quarry" value='{{quarry.name}}' id="quarry">
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" name="location" value='{{quarry.location}}' id="location">
+        </div>
+
+
+
+
+        <br />
+        <div class="form-group">
+            <button type="submit">Edit</button>
+            <br /> <br />
+            <a href="{% url 'quarry_list'%}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

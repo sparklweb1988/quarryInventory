@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <br>
+  <h2>Edit Truck Exit</h2>
+  <br><br>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <select name="truck" required>
+        {% for t in truck_numbers %}
+        <option value="{{ t }}"
+          {% if t == truck.truck_number %}selected{% endif %}>
+          {{ t }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <select name="material" required>
+        {% for m in materials %}
+        <option value="{{ m.id }}"
+          {% if m.id == truck.material.id %}selected{% endif %}>
+          {{ m.name }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input name="tare"
+             type="number"
+             value="{{ truck.tare_weight }}"
+             placeholder="Tare Weight"
+             required>
+
+      <input name="gross"
+             type="number"
+             value="{{ truck.gross_weight }}"
+             placeholder="Gross Weight"
+             required>
+    </div>
+
+    <div class="form-group">
+      <select name="destination" required>
+        {% for q in quarries %}
+        <option value="{{ q.name }}"
+          {% if q.name == truck.destination %}selected{% endif %}>
+          {{ q.name }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <br>
+    <div class="form-group">
+      <button type="submit">Update</button>
+      <br><br>
+      <a href="{% url 'truck_out_list' %}">Cancel</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

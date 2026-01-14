@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <br><br>
+  <h2>Welcome: ({{ user.username }}) to your Dashboard</h2>
+  <br><br>
+
+  {% if messages %}
+  {% for message in messages %}
+  <p>{{ message }}</p>
+  {% endfor %}
+  {% endif %}
+
+  <div class="card">
+   
+  <!-- Flex layout for cards -->
+  <div class="card-container">
+    <div class="card">
+      <h2>Daily Trucks In</h2>
+      <p>{{ daily_in }}</p>
+    </div>
+    <div class="card">
+      <h2>Daily Trucks Out</h2>
+      <p>{{ daily_out }}</p>
+    </div>
+    <div class="card">
+      <h2>Total Trucks In</h2>
+      <p>{{ total_in }}</p>
+    </div>
+
+
+    <div class="card">
+      <h2>Total Trucks Out</h2>
+      <p>{{ total_out }}</p>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [
+        'Daily Trucks IN',
+        'Daily Trucks OUT',
+        'Total Trucks IN',
+        'Total Trucks OUT'
+      ],
+      datasets: [{
+        label: 'Truck Count',
+        data: [
+          {{ daily_in }},
+          {{ daily_out }},
+          {{ total_in }},
+          {{ total_out }}
+        ],
+        backgroundColor: [
+          '#2ecc71',  // Daily IN
+          '#e74c3c',  // Daily OUT
+          '#3498db',  // Total IN
+          '#f39c12'   // Total OUT
+        ],
+        borderColor: [
+          '#27ae60',
+          '#c0392b',
+          '#2980b9',
+          '#d68910'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true
+        },
+        title: {
+          display: true,
+          text: 'Truck Movement Summary'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            precision: 0
+          }
+        }
+      }
+    }
+  });
+</script>
+
+</div>
+
+{% endblock content %}

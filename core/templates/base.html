@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quarry Inventory</title>
+    {% load static%}
+    <link rel="stylesheet" href="{% static 'core/styles.css'%}" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.min.js"
+      integrity="sha512-n/G+dROKbKL3GVngGWmWfwK0yPctjZQM752diVYnXZtD/48agpUKLIn0xDQL9ydZ91x6BiOmTIFwWjjFi2kEFg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+
+  <body>
+ 
+    <nav>
+      <a href="" class="logo">Quarry <br />Inventory</a>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul id="nav-menu">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'quarry_list' %}">Quarry</a></li>
+        <li><a href="{% url 'material_add' %}">Add Material</a></li>
+        <li><a href="{% url 'stock_list'%}">Stocks</a></li>
+        <li><a href="{% url 'truck_list'%}">Trucks In</a></li>
+        <li><a href="{% url 'truck_out_list'%}">Trucks Out</a></li>
+        <li><a href="{% url 'truck_history' %}">Summary</a></li>
+        <li><a href="{% url 'logout'%}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login'%}">Login</a></li>
+    {% endif %}
+      </ul>
+    </nav>
+    
+
+
+    {% block content%} {% endblock content%}
+    <footer>
+      <p>© <span id="year"></span> Quarry inventory. All Rights Reserved.</p>
+    </footer>
+
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const navMenu = document.getElementById("nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+      });
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+    <!-- payment  -->
+
+  </body>
+
+</html>
