@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h2>Tasks</h2>
+    <br>
+    <a href="{% url 'task_add' %}">Add Task</a>
+    <br><br>
+
+    <!-- Desktop Table View -->
+    <div class="desktop-view">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Project</th>
+                    <th>Assigned To</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.project.name }}</td>
+                    <td>{{ task.assigned_to }}</td>
+                    <td>{{ task.due_date }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>
+                        <a href="{% url 'task_edit' task.pk %}">Edit</a> |
+                        <a href="{% url 'task_delete' task.pk %}">Delete</a> |
+                        {% if task.status != 'done' %}
+                            <a href="{% url 'task_mark_complete' task.pk %}">Complete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No tasks found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="mobile-view">
+        {% for task in tasks %}
+        <div class="mobile-card">
+            <p><strong>Title:</strong> {{ task.title }}</p>
+            <p><strong>Project:</strong> {{ task.project.name }}</p>
+            <p><strong>Assigned To:</strong> {{ task.assigned_to }}</p>
+            <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+            <p><strong>Status:</strong> {{ task.status }}</p>
+            <div class="mobile-actions">
+                <a href="{% url 'task_edit' task.pk %}" class="action-btn edit">Edit</a>
+                <a href="{% url 'task_delete' task.pk %}" class="action-btn delete">Delete</a>
+                {% if task.status != 'done' %}
+                    <a href="{% url 'task_mark_complete' task.pk %}" class="action-btn complete">Complete</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p>No tasks found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

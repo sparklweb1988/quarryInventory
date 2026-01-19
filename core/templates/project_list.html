@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h2>Projects</h2>
+    <br>
+    <a href="{% url 'project_add' %}">Add Project</a>
+    <br><br>
+
+    <!-- Desktop Table View -->
+    <div class="desktop-view">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Client</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.client_name }}</td>
+                    <td>{{ project.start_date }}</td>
+                    <td>{{ project.end_date }}</td>
+                    <td>{{ project.status }}</td>
+                    <td class="d-flex gap-1">
+                        <a href="{% url 'project_edit' project.pk %}">Edit</a> |
+                        <a href="{% url 'project_delete' project.pk %}">Delete</a> |
+                        {% if project.status != 'completed' %}
+                            <a href="{% url 'project_mark_complete' project.pk %}">Complete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No projects found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="mobile-view">
+        {% for project in projects %}
+        <div class="mobile-card">
+            <p><strong>Name:</strong> {{ project.name }}</p>
+            <p><strong>Client:</strong> {{ project.client_name }}</p>
+            <p><strong>Start:</strong> {{ project.start_date }}</p>
+            <p><strong>End:</strong> {{ project.end_date }}</p>
+            <p><strong>Status:</strong> {{ project.status }}</p>
+            <div class="mobile-actions">
+                <a href="{% url 'project_edit' project.pk %}" class="action-btn edit">Edit</a>
+                <a href="{% url 'project_delete' project.pk %}" class="action-btn delete">Delete</a>
+                {% if project.status != 'completed' %}
+                    <a href="{% url 'project_mark_complete' project.pk %}" class="action-btn complete">Complete</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p>No projects found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

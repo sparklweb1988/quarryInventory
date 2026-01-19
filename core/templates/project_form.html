@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h3 class="mb-3 text-center">{{ title }}</h3>
+    <br>
+
+
+    <div class="card shadow p-4 col-md-6 mx-auto">
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="id_name" class="form-label">Project Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                <div class="text-danger">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Client Name -->
+            <div class="mb-3">
+                <label for="id_client_name" class="form-label">Client Name</label>
+                {{ form.client_name }}
+                {% if form.client_name.errors %}
+                <div class="text-danger">{{ form.client_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Status -->
+            <div class="mb-3">
+                <label for="id_status" class="form-label">Status</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                <div class="text-danger">{{ form.status.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Start Date -->
+            <div class="mb-3">
+                <label for="id_start_date" class="form-label">Start Date</label>
+                {{ form.start_date }}
+                {% if form.start_date.errors %}
+                <div class="text-danger">{{ form.start_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- End Date -->
+            <div class="mb-3">
+                <label for="id_end_date" class="form-label">End Date</label>
+                {{ form.end_date }}
+                {% if form.end_date.errors %}
+                <div class="text-danger">{{ form.end_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'project_list'%}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

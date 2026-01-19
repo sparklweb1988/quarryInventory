@@ -34,7 +34,7 @@
                     <td>{{ truck.time }}</td>
                     <td>
                         <a href="{% url 'truck_in_edit' truck.id %}">Edit</a> |
-                        <a href="{% url 'truck_in_delete' truck.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="{% url 'truck_in_delete' truck.id %}">Delete</a>
                     </td>
                 </tr>
                 {% empty %}

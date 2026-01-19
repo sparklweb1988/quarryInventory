@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="container mt-4">
+    <h3 class="mb-3 text-center">{{ title }}</h3>
+    <br><br>
+    <!-- Center the card -->
+    <div class="card shadow p-4 col-md-6 mx-auto">
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{% url 'task_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

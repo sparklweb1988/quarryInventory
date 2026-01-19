@@ -31,9 +31,10 @@
         <li><a href="{% url 'truck_list'%}">Trucks In</a></li>
         <li><a href="{% url 'truck_out_list'%}">Trucks Out</a></li>
         <li><a href="{% url 'truck_history' %}">Summary</a></li>
+        <li><a href="{% url 'project_list' %}">Projects</a></li>
+        <li><a href="{% url 'task_list' %}">Task</a></li>
         <li><a href="{% url 'logout'%}">Logout</a></li>
-        {% else %}
-        <li><a href="{% url 'login'%}">Login</a></li>
+       
     {% endif %}
       </ul>
     </nav>
