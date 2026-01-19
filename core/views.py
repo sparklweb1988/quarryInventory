@@ -481,9 +481,7 @@ def generate_excel(all_trucks, from_date, to_date):
 
 
 
-from django.shortcuts import render
-from django.utils.timezone import now
-from .models import Project, Task, TruckIn, TruckOut
+
 
 def dashboard(request):
     # 1️⃣ Get the company for the logged-in user
